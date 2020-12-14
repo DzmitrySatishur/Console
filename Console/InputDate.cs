@@ -7,9 +7,8 @@ namespace ConsoleApp2
     {
         public static DateTime ParseDate(string dateAsString)
         {
-            DateTime inputDate = DateTime.ParseExact(dateAsString, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            var inputDate = DateTime.ParseExact(dateAsString, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             return inputDate;
         }
     }
 }
-

@@ -6,11 +6,7 @@ namespace ConsoleApp2
     {
         public bool IsLeapYear(DateTime dateTime)
         {
-            if (dateTime.Year % 4 == 0 && (dateTime.Year % 100 != 0 || dateTime.Year % 400 == 0))
-            {
-                return true;
-            }
-            return false;
+            return dateTime.Year % 4 == 0 && (dateTime.Year % 100 != 0 || dateTime.Year % 400 == 0) ;
         }
 
         public void СountWithYear(DateTime dateTime)
@@ -19,7 +15,7 @@ namespace ConsoleApp2
             DateTime  tempDate;
             while (true)
             {
-                if (newDate.Year % 4 == 0 && (newDate.Year % 100 != 0 || newDate.Year % 400 == 0))
+                if (IsLeapYear(newDate))
                 {
                     tempDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
                     break;
@@ -32,12 +28,12 @@ namespace ConsoleApp2
 
             DateTime needDate = new DateTime(tempDate.Year, 02, 29);
             int numbOfDays = (needDate - tempDate).Days + ((needDate.Year - dateTime.Year) * 365);
-            Console.WriteLine(numbOfDays + " days left to 29 February");
+            Console.WriteLine(numbOfDays + " days left to 29 February \nTry again? Y/N");
         }
 
         public void СountWithoutYear(DateTime dateTime)
         {
-            if (dateTime.Year % 4 == 0 && (dateTime.Year % 100 != 0 || dateTime.Year % 400 == 0))
+            if (IsLeapYear(dateTime))
             {
                 var date = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
                 if (date > new DateTime(
@@ -48,7 +44,7 @@ namespace ConsoleApp2
                 else
                 {
                     int daysOfLeapYear = (new DateTime(dateTime.Year, 02, 29) - date).Days;
-                    Console.WriteLine(daysOfLeapYear + " days left to 29 February");
+                    Console.WriteLine(daysOfLeapYear + " days left to 29 February \nTry again? Y/N");
                 }
             }
         }

@@ -6,30 +6,47 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please, enter the date in format dd.mm.yyyy: ");
-            while (true)
+            Console.WriteLine("Press 'Y' for start program or 'N' for exit");
+            try
             {
-                try
+                while (true)
                 {
-                    string dateAsString = Console.ReadLine();
-                    InputDate date = new InputDate();
-                    DateTime datetime = InputDate.ParseDate(dateAsString);
-                    DateCalculation calculate = new DateCalculation();
-                    bool result = calculate.IsLeapYear(datetime);
-                    if (result)
+                    const char yes = 'Y';
+                    const char no = 'N';
+                    char userChoice = Convert.ToChar(Console.ReadLine().ToUpperInvariant());
+                    if (userChoice == yes)
                     {
-                        calculate.СountWithoutYear(datetime);
+                        try
+                        {
+                            Console.WriteLine("Please, enter the date in format dd.mm.yyyy: ");
+                            string dateAsString = Console.ReadLine();
+                            DateTime datetime = InputDate.ParseDate(dateAsString);
+                            DateCalculation calculate = new DateCalculation();
+                            bool result = calculate.IsLeapYear(datetime);
+                            if (result)
+                                calculate.СountWithoutYear(datetime);
+                            else
+                                calculate.СountWithYear(datetime);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Invalid date format! Try again? Y/N");
+                        }
+                    }
+                    else if (userChoice == no)
+                    {
+                        Console.WriteLine("Goodbye!");
+                        Environment.Exit(0);
                     }
                     else
                     {
-                        calculate.СountWithYear(datetime);
+                        Console.WriteLine("Incorrect symbols.Press Y or N");
                     }
                 }
-                catch (Exception)
-                {
-                    Console.WriteLine("Invalid format date! Format date: dd.mm.yyyy");
-                    Environment.Exit(0);
-                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Incorrect symbols. Press Y for start or N for exit");
             }
         }
     }
