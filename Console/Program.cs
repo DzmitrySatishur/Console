@@ -2,52 +2,57 @@
 
 namespace ConsoleApp2
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private const char Yes = 'Y';
+        private const char No = 'N';
+
+        private static void Main()
         {
-            Console.WriteLine("Press 'Y' for start program or 'N' for exit");
-            try
+            do
             {
-                while (true)
+                Console.WriteLine("Press 'Y' for start program or 'N' for exit");
+
+                try
                 {
-                    const char yes = 'Y';
-                    const char no = 'N';
-                    char userChoice = Convert.ToChar(Console.ReadLine().ToUpperInvariant());
-                    if (userChoice == yes)
+                    var userChoice = Convert.ToChar(Console.ReadLine()?.ToUpperInvariant() ?? string.Empty);
+
+                    switch (userChoice)
                     {
-                        try
+                        case Yes:
                         {
-                            Console.WriteLine("Please, enter the date in format dd.mm.yyyy: ");
-                            string dateAsString = Console.ReadLine();
-                            DateTime datetime = InputDate.ParseDate(dateAsString);
-                            DateCalculation calculate = new DateCalculation();
-                            bool result = calculate.IsLeapYear(datetime);
-                            if (result)
-                                calculate.СountWithoutYear(datetime);
-                            else
-                                calculate.СountWithYear(datetime);
+                            try
+                            {
+                                Console.WriteLine("Please, enter the date in format dd.mm.yyyy: ");
+
+                                var datetime = DateParser.ParseDate(Console.ReadLine());
+                                var dateCalculator = new DateCalculator();
+                                var days = dateCalculator.Count(datetime);
+                                Console.WriteLine(days + " days left to 29 February \nTry again? Y/N");
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Invalid date format! Try again? Y/N");
+                            }
+
+                            break;
                         }
-                        catch (Exception)
-                        {
-                            Console.WriteLine("Invalid date format! Try again? Y/N");
-                        }
-                    }
-                    else if (userChoice == no)
-                    {
-                        Console.WriteLine("Goodbye!");
-                        Environment.Exit(0);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Incorrect symbols.Press Y or N");
+
+                        case No:
+                            Console.WriteLine("Goodbye!");
+                            Environment.Exit(0);
+                            break;
+
+                        default:
+                            throw new ArgumentException("Incorrect symbols.");
                     }
                 }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Incorrect symbols. Press Y for start or N for exit");
-            }
+                catch (Exception)
+                {
+                    Console.WriteLine("Incorrect symbols. Press Y for start or N for exit");
+                }
+            } 
+            while (true);
         }
     }
 }
