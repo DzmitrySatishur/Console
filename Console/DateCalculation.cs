@@ -6,13 +6,13 @@ namespace ConsoleApp2
     {
         public bool IsLeapYear(DateTime dateTime)
         {
-            return dateTime.Year % 4 == 0 && (dateTime.Year % 100 != 0 || dateTime.Year % 400 == 0) ;
+            return dateTime.Year % 4 == 0 && (dateTime.Year % 100 != 0 || dateTime.Year % 400 == 0);
         }
 
         public void СountWithYear(DateTime dateTime)
         {
-            var newDate = new DateTime (dateTime.Year, dateTime.Month, dateTime.Day);
-            DateTime  tempDate;
+            var newDate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
+            DateTime tempDate;
             while (true)
             {
                 if (IsLeapYear(newDate))
@@ -22,7 +22,7 @@ namespace ConsoleApp2
                 }
                 else
                 {
-                   newDate = newDate.AddYears(1);
+                    newDate = newDate.AddYears(1);
                 }
             }
 
@@ -39,7 +39,25 @@ namespace ConsoleApp2
                 if (date > new DateTime(
                     dateTime.Year, 02, 29))
                 {
-                    СountWithYear(date.AddYears(1));
+                    DateTime needDate = new DateTime(date.Year, 02, 29);
+                    int tempDays = (date - needDate).Days;
+                    DateTime tempDate;
+                    date = date.AddYears(1);
+                    while (true)
+                    {
+                        if (IsLeapYear(date))
+                        {
+                            tempDate = new DateTime(date.Year, date.Month, date.Day);
+                            break;
+                        }
+                        else
+                        {
+                            date = date.AddYears(1);
+                        }
+                    }
+
+                    var countOfDays = ((tempDate.Year - dateTime.Year) * 365) - tempDays;
+                    Console.WriteLine(countOfDays + " days left to 29 February \nTry again? Y/N");
                 }
                 else
                 {
